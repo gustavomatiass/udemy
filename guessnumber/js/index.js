@@ -1,11 +1,11 @@
-const form = document.getElementById('form');
-form.addEventListener('submit', handleSubmit(e));
+let form = document.getElementById('form');
+form.addEventListener('submit', handleSubmit);
 
 let status = document.getElementById('status');
 let attempt = document.getElementById('attempt');
 let result = document.getElementById('result');
 
-const Guess = {
+let Guess = {
     max: 10,
     attemptsNumber: 0,
     numberdrawn: function randowValue() {
@@ -22,8 +22,32 @@ function updateAttempt(attempt, value){
 
 function handleSubmit(e) {
     e.preventDefoult();
-
     
+    let kick = document.getElementById('kick').value;
+
+    if(!kick) {
+        alert('Digite algum valor')
+        return;
+    };
+    updateAttempt(attempt, ++ Guess.attemptsNumber)
+
+    if(numberdrawn == kick) {
+        playAgain();
+        status.innerHTML('parabens vc acentou')
+        result.style.transition = '0,4s';
+        result.style.backgroundColor = 'green'
+        result.style.color = '#fff'
+        status.style.color = '#fff'
+        clear();
+    }else if (numberdrawn > kick){
+        status.innerHTML = 'o numero é maior'
+        status.style.color = 'red'
+        clear();
+    }else if(numberdrawn < kick){
+        status.innerHTML = 'o numero é menor'
+        status.style.color = 'red'
+        clear();
+    }
 };
 
 function playAgain(){
@@ -31,6 +55,7 @@ function playAgain(){
 };
 
 function restart(){
+    document.location.reload(true)
     document.location.reload(true);
 }
 
